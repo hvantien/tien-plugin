@@ -1,6 +1,6 @@
 {
   "name": "tien-plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Bộ skill, rule, agent và command cá nhân của Tien cho Claude Code.",
   "author": {
     "name": "Tien",

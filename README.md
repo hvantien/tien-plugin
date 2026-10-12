@@ -15,6 +15,12 @@ Cập nhật sau khi có thay đổi mới:
 /plugin marketplace update tien-plugin
 ```
 
+## Skills hiện có
+
+| Skill | Dùng khi |
+|---|---|
+| `headless-agent-jobs` | App web cá nhân chạy `claude -p` trên server để xử lý nội dung user vừa gửi (chấm bài, trả lời comment...), kèm queue panel, monitor và trang lịch sử chạy |
+
 ## Cấu trúc
 
 ```
