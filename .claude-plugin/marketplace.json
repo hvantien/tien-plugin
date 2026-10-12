@@ -1,0 +1,14 @@
+{
+  "name": "tien-plugin",
+  "description": "Marketplace cá nhân của Tien: skill, rule, agent và command cho Claude Code.",
+  "owner": {
+    "name": "Tien"
+  },
+  "plugins": [
+    {
+      "name": "tien-plugin",
+      "source": "./",
+      "description": "Bộ skill, rule, agent và command cá nhân của Tien cho Claude Code."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "description": "Nạp các file trong rules/*.md vào ngữ cảnh khi bắt đầu session",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/load-rules.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

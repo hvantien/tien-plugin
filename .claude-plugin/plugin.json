@@ -1,0 +1,12 @@
+{
+  "name": "tien-plugin",
+  "version": "0.1.0",
+  "description": "Bộ skill, rule, agent và command cá nhân của Tien cho Claude Code.",
+  "author": {
+    "name": "Tien",
+    "url": "https://github.com/hvantien"
+  },
+  "homepage": "https://github.com/hvantien/tien-plugin",
+  "repository": "https://github.com/hvantien/tien-plugin",
+  "keywords": ["skills", "rules", "personal"]
+}
