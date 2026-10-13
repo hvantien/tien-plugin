@@ -20,6 +20,7 @@ Cập nhật sau khi có thay đổi mới:
 | Skill | Dùng khi |
 |---|---|
 | `headless-agent-jobs` | App web cá nhân chạy `claude -p` trên server để xử lý nội dung user vừa gửi (chấm bài, trả lời comment...), kèm queue panel, monitor và trang lịch sử chạy |
+| `app-motion` | Bộ animation của learn-english (Wordpop) cho app React + Tailwind v4: nút nhấn lò xo, sheet, toast, chuyển trang, thẻ vuốt/lật, pháo giấy, âm thanh, rung |
 
 ## Cấu trúc
 

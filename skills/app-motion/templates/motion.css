@@ -1,0 +1,73 @@
+/* Paste into the app's main Tailwind v4 CSS (after `@import 'tailwindcss'`).
+   Keep only the parts you use. Colors are Wordpop's pastel palette: swap for the project's. */
+
+@theme {
+  /* Overshooting ease for CSS-only pops (hover, small badges). */
+  --ease-pop: cubic-bezier(0.2, 0.9, 0.3, 1.25);
+
+  /* Looping motion runs in CSS so the browser moves it to the compositor and it never
+     blocks the main thread (Motion's JS loops would). */
+  --animate-shimmer: shimmer 1.4s linear infinite;
+  --animate-bob: bob 3.2s ease-in-out infinite;
+  --animate-drift: drift var(--drift-t, 5s) ease-in-out infinite;
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(0, -6px, 0) rotate(-2deg);
+    }
+  }
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(var(--drift-x, 0), var(--drift-y, 0), 0);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: -200% 0;
+    }
+    to {
+      background-position: 200% 0;
+    }
+  }
+}
+
+/* 3D card flip helpers. */
+@utility backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+@utility preserve-3d {
+  transform-style: preserve-3d;
+}
+/* Numbers that count up must not jitter in width. */
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+/* Loading placeholder: <div class="skeleton h-20 rounded-2xl" /> */
+@utility skeleton {
+  background: linear-gradient(90deg, #ececea 25%, #f6f6f4 50%, #ececea 75%);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Respect the OS setting: CSS animations collapse to one instant frame. Motion components
+   still animate, so gate big ones (confetti, loops) in JS too. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
