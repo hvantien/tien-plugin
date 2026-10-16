@@ -18,6 +18,7 @@ Stack of the templates: React 19, Tailwind v4, `motion` (import from `motion/rea
    - Whether the app has sound/vibration settings.
    Do not assume; report what was found in one or two lines.
 1. **Agree on scope.** List the screens/components the user asked about. If the request is vague ("make it feel alive"), propose which elements to animate and which effect from the Catalog, and confirm before editing.
+   If the user can't answer, apply only the **core set**: primary buttons (`Pressable`), list entry (stagger), and answer feedback if the app has a quiz or form result. Put everything else you would suggest (page transitions, sheet, toast, splash, result screen) under "Suggested next" in the report instead of in code. Why: a vague request is permission to polish what exists, not to redesign the app.
 2. **Install only what the chosen pieces need:**
    ```bash
    npm i motion canvas-confetti && npm i -D @types/canvas-confetti
@@ -89,6 +90,8 @@ Use this to decide; an element not listed here gets no motion unless the user as
 - Keep the template pastel colors, or hardcode `#fff` / `#000` / `bg-white` / `text-black`, in a project that has its own tokens or dark mode.
 - Change spring numbers unless the user asks for a different feel.
 - Change component logic, data flow or layout while adding motion.
+- Add UI the app doesn't have (a toast where there was no message, a sheet replacing a modal that works) unless the user asked for it.
+- Add page transitions without asking: they need a fixed-height shell where each page scrolls inside, which changes the layout.
 - Play sound without `sfx.unlock()`, or ignore the app's mute / vibration settings.
 - Install `motion` next to an existing `framer-motion`.
 - Report done without running the checks below.
@@ -97,8 +100,14 @@ Use this to decide; an element not listed here gets no motion unless the user as
 
 1. Every element in scope is listed with the effect applied, or a reason it was skipped.
 2. `npm run build` (or the project's build/typecheck script) passes with no new errors.
-3. Light and dark mode both checked: no hardcoded colors on animated elements, text contrast at least 4.5:1, icons and button borders at least 3:1. If a browser or Playwright is available, take a screenshot of each changed screen in both modes (emulate `prefers-color-scheme: dark`).
-4. Reduced motion checked: with `prefers-reduced-motion: reduce`, no infinite loop and no confetti runs.
+3. Light/dark and reduced motion checked with the bundled script. Start the app (`npm run dev`, or build + `npx vite preview`), then:
+   ```bash
+   node <this skill>/scripts/check-ui.mjs --url http://localhost:5173 --routes /,/quiz/1 \
+     --click 'button:has-text("Correct answer text")' --out ./ui-check
+   ```
+   Add `--dark-class` when dark mode is a `dark` class instead of `prefers-color-scheme`. It screenshots each route in light and dark, measures text contrast (4.5:1, or 3:1 for large text), and confirms that with reduced motion no infinite animation or confetti canvas runs. Paste its table into the report and look at the screenshots. Fix every FAIL row on an element you touched, even if the problem was there before (e.g. answer feedback colors with no `dark:` variant): the user will judge your feedback by whether it can be read. FAIL rows on elements you didn't touch: report them with a suggested fix, don't change them. "check if inactive (faded)" lines are warnings: fine for dimmed options, worth a look for labels people must read.
+   No Playwright available (`npm i -g playwright && npx playwright install chromium` fails): write "not checked" for this item. Do not write your own checker; one script keeps results comparable.
+4. No hardcoded colors on animated elements (the script can't see these; read your diff).
 5. Sound and vibration respect the app's settings (if it has them).
 
 Finish with this report:
@@ -109,4 +118,4 @@ Finish with this report:
 | Word list | `src/components/WordList.tsx` | stagger, cap 10 | |
 | Footer link | `src/components/Footer.tsx` | skipped | secondary link |
 
-Then one line each: build result, light/dark result, reduced-motion result. Write "not checked" for anything that could not be run, never "OK".
+Then: the build result, the `check-ui.mjs` table, and a short "Suggested next" list of effects you did not apply (needed when scope was the core set). Write "not checked" for anything that could not be run, never "OK".
